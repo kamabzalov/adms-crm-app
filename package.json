@@ -1,8 +1,8 @@
 {
-  "name": "demo1",
+  "name": "adms",
   "version": "8.1.9",
   "private": true,
-  "homepage": "/metronic8/react/demo1",
+  "homepage": "/metronic/react/adms",
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.2.4",
     "@formatjs/intl-relativetimeformat": "11.2.4",

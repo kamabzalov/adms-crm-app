@@ -64,12 +64,12 @@ const AuthInit: FC<WithChildren> = ({children}) => {
   const {auth, logout, setCurrentUser} = useAuth()
   const didRequest = useRef(false)
   const [showSplashScreen, setShowSplashScreen] = useState(true)
-  // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
+  // We should request user by authToken (IN OUR EXAMPLE IT'S TOKEN) before rendering the application
   useEffect(() => {
-    const requestUser = async (apiToken: string) => {
+    const requestUser = async (uid: string, apiToken: string) => {
       try {
         if (!didRequest.current) {
-          const {data} = await getUserByToken(apiToken)
+          const {data} = await getUserByToken(uid, apiToken)
           if (data) {
             setCurrentUser(data)
           }
@@ -86,8 +86,8 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       return () => (didRequest.current = true)
     }
 
-    if (auth && auth.api_token) {
-      requestUser(auth.api_token)
+    if (auth && auth.useruid && auth.token) {
+      requestUser(auth.useruid, auth.token)
     } else {
       logout()
       setShowSplashScreen(false)
