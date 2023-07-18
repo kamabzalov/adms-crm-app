@@ -3,10 +3,14 @@ import {AuthModel, UserModel} from './_models'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+<<<<<<< HEAD
 export const GET_USER_BY_ACCESSTOKEN_URL = `${API_URL}/api/v1/user`
 export const LOGIN_URL = `${API_URL}/api/v1/user`
 export const REGISTER_URL = `${API_URL}/register`
 export const REQUEST_PASSWORD_URL = `${API_URL}/forgot_password`
+=======
+export const LOGIN_URL = `${API_URL}/api/v1/user`
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
 
 // Server should return AuthModel
 export function login(user: string, secret: string) {
@@ -17,6 +21,7 @@ export function login(user: string, secret: string) {
   })
 }
 
+<<<<<<< HEAD
 // Server should return AuthModel
 export function register(
   email: string,
@@ -44,5 +49,10 @@ export function requestPassword(email: string) {
 export function getUserByToken(uid: string, token: string) {
   return axios.post<UserModel>(`${GET_USER_BY_ACCESSTOKEN_URL}/${uid}/token`, {
     token,
+=======
+export function getUserByUserId(uid: string) {
+  return axios.post<UserModel>(`${LOGIN_URL}/${uid}`, {
+    uid,
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
   })
 }

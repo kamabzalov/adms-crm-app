@@ -1,7 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect} from 'react'
+<<<<<<< HEAD
 import {Outlet, Link} from 'react-router-dom'
 
+=======
+import {Outlet} from 'react-router-dom'
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
 
 const AuthLayout = () => {
   useEffect(() => {
@@ -18,19 +21,19 @@ const AuthLayout = () => {
 
   return (
     <div className='d-flex flex-column flex-lg-row flex-column-fluid h-100'>
-      {/* begin::Body */}
       <div className='d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1'>
-        {/* begin::Form */}
         <div className='d-flex flex-center flex-column flex-lg-row-fluid'>
-          {/* begin::Wrapper */}
           <div className='w-lg-500px p-10'>
             <Outlet />
           </div>
-          {/* end::Wrapper */}
         </div>
+<<<<<<< HEAD
         {/* end::Form */}
       </div>
       {/* end::Body */}
+=======
+      </div>
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
     </div>
   )
 }

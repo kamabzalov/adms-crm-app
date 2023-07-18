@@ -3,6 +3,7 @@ import {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
 import {useFormik} from 'formik'
+<<<<<<< HEAD
 import {getUserByToken, login} from '../core/_requests'
 import {useAuth} from '../core/Auth'
 
@@ -15,18 +16,25 @@ const loginSchema = Yup.object().shape({
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Password is required'),
-})
+=======
+import {login} from '../core/_requests'
+import {useAuth} from '../core/Auth'
 
+const loginSchema = Yup.object().shape({
+  username: Yup.string().trim().required('Username is required'),
+  password: Yup.string().required('Password is required'),
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
+})
 const initialValues = {
+<<<<<<< HEAD
   username: 'username',
   password: 'password',
+=======
+  username: '',
+  password: '',
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
 }
 
-/*
-  Formik+YUP+Typescript:
-  https://jaredpalmer.com/formik/docs/tutorial#getfieldprops
-  https://medium.com/@maurice.de.beijer/yup-validation-and-typescript-and-formik-6c342578a20e
-*/
 
 export function Login() {
   const [loading, setLoading] = useState(false)
@@ -58,12 +66,11 @@ export function Login() {
       noValidate
       id='kt_login_signin_form'
     >
-      {/* begin::Heading */}
       <div className='text-center mb-11'>
         <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
       </div>
-      {/* begin::Heading */}
 
+<<<<<<< HEAD
       {/* begin::Login options */}
 
       {/* end::Login options */}
@@ -82,9 +89,14 @@ export function Login() {
             continue.
           </div>
         </div>
+=======
+      {formik.status && (
+        <div className='mb-lg-15 alert alert-danger'>
+          <div className='alert-text font-weight-bold'>{formik.status}</div>
+        </div>
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
       )}
 
-      {/* begin::Form group */}
       <div className='fv-row mb-8'>
         <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
         <input
@@ -107,9 +119,7 @@ export function Login() {
           </div>
         )}
       </div>
-      {/* end::Form group */}
 
-      {/* begin::Form group */}
       <div className='fv-row mb-3'>
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
@@ -134,21 +144,20 @@ export function Login() {
           </div>
         )}
       </div>
-      {/* end::Form group */}
 
-      {/* begin::Wrapper */}
       <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
         <div />
+<<<<<<< HEAD
 
         {/* begin::Link */}
         {/* <Link to='/auth/forgot-password' className='link-primary'>
           Forgot Password ?
         </Link> */}
         {/* end::Link */}
+=======
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
       </div>
-      {/* end::Wrapper */}
 
-      {/* begin::Action */}
       <div className='d-grid mb-10'>
         <button
           type='submit'
@@ -165,14 +174,17 @@ export function Login() {
           )}
         </button>
       </div>
-      {/* end::Action */}
 
+<<<<<<< HEAD
       <div className='text-gray-500 text-center fw-semibold fs-6'>
         {/* Not a Member yet?{' '}
         <Link to='/auth/registration' className='link-primary'>
           Sign up
         </Link> */}
       </div>
+=======
+      <div className='text-gray-500 text-center fw-semibold fs-6'></div>
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
     </form>
   )
 }

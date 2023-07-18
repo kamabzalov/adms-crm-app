@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
   "name": "adms",
   "version": "8.1.9",
   "private": true,
   "homepage": "/metronic/react/adms",
+=======
+  "name": "adm",
+  "version": "0.0.1",
+  "private": true,
+  "homepage": "/",
+>>>>>>> 97e48de4548e311edeefc54cc98366b4ef2e603b
   "dependencies": {
     "@formatjs/intl-pluralrules": "5.2.4",
     "@formatjs/intl-relativetimeformat": "11.2.4",
