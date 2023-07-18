@@ -1,13 +1,12 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import {FC} from 'react'
 import {useIntl} from 'react-intl'
-import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import {PageTitle} from '../../../_metronic/layout/core'
 
 
 const DashboardPage: FC = () => (
   <>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt nesciunt esse necessitatibus id ipsum nobis eum sequi reprehenderit, vero ipsam deleniti dolore asperiores maxime odio harum quam hic fuga illo.</p>
+  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam ex ab sapiente magnam eligendi obcaecati, iusto ducimus suscipit, nesciunt debitis officia dolor. Voluptatum quos nostrum ullam dolor consequatur fugiat mollitia.</p>
   </>
 )
 
