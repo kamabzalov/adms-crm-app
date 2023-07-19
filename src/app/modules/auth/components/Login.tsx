@@ -33,8 +33,11 @@ export function Login() {
         setCurrentUser(user)
       } catch (error) {
         console.error(error)
+        if (typeof error === 'object' && error !== null) {
+          setStatus(error?.['response']?.['data']?.['error'])
+        }
         saveAuth(undefined)
-        setStatus('The login details are incorrect')
+
         setSubmitting(false)
         setLoading(false)
       }
@@ -84,6 +87,7 @@ export function Login() {
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
           type='password'
+          placeholder='Password'
           autoComplete='off'
           {...formik.getFieldProps('password')}
           className={clsx(
