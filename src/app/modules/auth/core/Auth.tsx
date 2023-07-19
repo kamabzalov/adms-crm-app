@@ -10,8 +10,7 @@ import {
 } from 'react'
 import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import {AuthModel, UserModel} from './_models'
-import * as authHelper from './AuthHelpers'
-import {getUserByToken} from './_requests'
+import {getUserByUserId} from './_requests'
 import {WithChildren} from '../../../../_metronic/helpers'
 
 type AuthContextProps = {
@@ -23,7 +22,7 @@ type AuthContextProps = {
 }
 
 const initAuthContextPropsState = {
-  auth: authHelper.getAuth(),
+  auth: undefined,
   saveAuth: () => {},
   currentUser: undefined,
   setCurrentUser: () => {},
@@ -37,15 +36,10 @@ const useAuth = () => {
 }
 
 const AuthProvider: FC<WithChildren> = ({children}) => {
-  const [auth, setAuth] = useState<AuthModel | undefined>(authHelper.getAuth())
+  const [auth, setAuth] = useState<AuthModel | undefined>()
   const [currentUser, setCurrentUser] = useState<UserModel | undefined>()
   const saveAuth = (auth: AuthModel | undefined) => {
     setAuth(auth)
-    if (auth) {
-      authHelper.setAuth(auth)
-    } else {
-      authHelper.removeAuth()
-    }
   }
 
   const logout = () => {
@@ -64,12 +58,11 @@ const AuthInit: FC<WithChildren> = ({children}) => {
   const {auth, logout, setCurrentUser} = useAuth()
   const didRequest = useRef(false)
   const [showSplashScreen, setShowSplashScreen] = useState(true)
-  // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
   useEffect(() => {
-    const requestUser = async (apiToken: string) => {
+    const requestUser = async (uid: string) => {
       try {
         if (!didRequest.current) {
-          const {data} = await getUserByToken(apiToken)
+          const {data} = await getUserByUserId(uid)
           if (data) {
             setCurrentUser(data)
           }
@@ -86,8 +79,8 @@ const AuthInit: FC<WithChildren> = ({children}) => {
       return () => (didRequest.current = true)
     }
 
-    if (auth && auth.api_token) {
-      requestUser(auth.api_token)
+    if (auth && auth.useruid) {
+      requestUser(auth.useruid)
     } else {
       logout()
       setShowSplashScreen(false)
