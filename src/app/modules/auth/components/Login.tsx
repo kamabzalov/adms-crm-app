@@ -8,10 +8,7 @@ import {useAuth} from '../core/Auth'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().trim().required('Username is required'),
-  password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+  password: Yup.string().required('Password is required'),
 })
 
 const initialValues = {
@@ -19,11 +16,6 @@ const initialValues = {
   password: '',
 }
 
-/*
-  Formik+YUP+Typescript:
-  https://jaredpalmer.com/formik/docs/tutorial#getfieldprops
-  https://medium.com/@maurice.de.beijer/yup-validation-and-typescript-and-formik-6c342578a20e
-*/
 
 export function Login() {
   const [loading, setLoading] = useState(false)
