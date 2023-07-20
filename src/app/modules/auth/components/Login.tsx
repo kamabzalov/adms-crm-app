@@ -8,7 +8,7 @@ import {useAuth} from '../core/Auth'
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().trim().required('Username is required'),
-  password: Yup.string().required('Password is required'),
+  password: Yup.string().trim().required('Password is required'),
 })
 
 const initialValues = {
@@ -16,6 +16,11 @@ const initialValues = {
   password: '',
 }
 
+/*
+  Formik+YUP+Typescript:
+  https://jaredpalmer.com/formik/docs/tutorial#getfieldprops
+  https://medium.com/@maurice.de.beijer/yup-validation-and-typescript-and-formik-6c342578a20e
+*/
 
 export function Login() {
   const [loading, setLoading] = useState(false)
@@ -30,6 +35,7 @@ export function Login() {
         const {data: auth} = await login(values.username, values.password)
         saveAuth(auth)
         const user = await {id: auth.useruid, username: values.username, password: values.password}
+        localStorage.setItem('user', String(user.id))
         setCurrentUser(user)
       } catch (error) {
         console.error(error)
@@ -87,7 +93,6 @@ export function Login() {
         <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
         <input
           type='password'
-          placeholder='Password'
           autoComplete='off'
           {...formik.getFieldProps('password')}
           className={clsx(
