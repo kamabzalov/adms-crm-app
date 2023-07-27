@@ -1,9 +1,16 @@
+import { useLocalStorage } from '_metronic/helpers/crud-helper/helpers'
+import { useAuth } from 'app/modules/auth/AuthContex'
 import { FC } from 'react'
 
 const HeaderUserMenu: FC = () => {
+    const [, , removeLocalStorageUserId] = useLocalStorage('userId')
 
+    const { setUserId } = useAuth()
     const userLogout = (): void => {
-
+        window.location.href = '/'
+        removeLocalStorageUserId()
+        setUserId(null)
+        window.location.reload()
     }
     return (
         <div

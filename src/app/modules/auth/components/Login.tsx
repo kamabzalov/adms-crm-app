@@ -1,9 +1,11 @@
 import clsx from 'clsx'
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import { login } from '../../auth/core/_requests'
-import { UserModel } from '../core/_models';
+import { UserModel } from '../core/_models'
+import { useLocalStorage } from '_metronic/helpers/crud-helper/helpers'
+import { useAuth } from '../AuthContex'
 
 const loginSchema = Yup.object().shape({
     username: Yup.string().trim().required('Username is required'),
@@ -17,6 +19,12 @@ const initialValues: UserModel = {
 
 export function Login() {
     const [loading, setLoading] = useState(false)
+    const [, userIdToLocalStorage] = useLocalStorage('userId')
+    const { setUserId } = useAuth()
+
+    useEffect(() => {
+        document.getElementById('splash-screen')?.remove()
+    }, [])
 
     const formik = useFormik({
         initialValues,
@@ -24,23 +32,24 @@ export function Login() {
         onSubmit: async (values, { setStatus, setSubmitting }) => {
             setLoading(true)
             try {
-                const { data } = await login(values.username, values.password);
-                console.log(data);
+                const { data } = await login(values.username, values.password)
+                setStatus(false)
+                userIdToLocalStorage(data.useruid)
+                setUserId(data.useruid)
             } catch (error) {
                 if (typeof error === 'object' && error !== null) {
                     setStatus(error?.['response']?.['data']?.['error'])
                 }
                 setSubmitting(false)
                 setLoading(false)
+            } finally {
+                setSubmitting(false)
+                setLoading(false)
             }
         },
     })
     return (
-        <form
-            className='form w-100'
-            onSubmit={formik.handleSubmit}
-            noValidate
-        >
+        <form className='form w-100' onSubmit={formik.handleSubmit} noValidate>
             <div className='text-center mb-11'>
                 <h1 className='text-dark fw-bolder mb-3'>Sign In</h1>
             </div>
@@ -108,7 +117,7 @@ export function Login() {
                 <button
                     type='submit'
                     className='btn btn-primary'
-                    disabled={formik.isSubmitting || !formik.isValid}
+                    disabled={formik.isSubmitting || !formik.isValid || loading}
                 >
                     {!loading && <span className='indicator-label'>Continue</span>}
                     {loading && (
