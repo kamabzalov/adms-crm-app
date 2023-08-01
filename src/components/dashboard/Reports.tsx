@@ -1,8 +1,16 @@
 export const Reports = () => {
     return (
         <>
-            <h1 className='mb-5'>Reports</h1>
-            <div>We're still working on this page</div>
+            <div className='col-12'>
+                <div className='card card-custom mb-5'>
+                    <div className='card-header'>
+                        <h3 className='card-title fw-bolder text-dark'>Reports</h3>
+                    </div>
+                    <div className="card-body">
+                        <p className="text-dark">We're still working on this page</p>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
