@@ -26,17 +26,12 @@ export function DashboardHeader() {
                                 </Link>
                             </div>
                             <div className='menu-item me-lg-1'>
-                                <Link className='menu-link py-3' to={'billing'}>
+                                <Link className='menu-link py-3' to={'/dashboard/billing'}>
                                     <span className='menu-title'>Billing</span>
                                 </Link>
                             </div>
                             <div className='menu-item me-lg-1'>
-                                <Link className='menu-link py-3' to={'reports'}>
-                                    <span className='menu-title'>Reports</span>
-                                </Link>
-                            </div>
-                            <div className='menu-item me-lg-1'>
-                                <Link className='menu-link py-3' to={'billing'}>
+                                <Link className='menu-link py-3' to={'/dashboard/reports'}>
                                     <span className='menu-title'>Reports</span>
                                 </Link>
                             </div>
