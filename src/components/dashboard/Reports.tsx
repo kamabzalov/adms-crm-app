@@ -6,9 +6,10 @@ export const Reports = () => {
                     <div className='card-header'>
                         <h3 className='card-title fw-bolder text-dark'>Reports</h3>
                     </div>
-                    <div className="card-body">
-                        <p className="text-dark">We're still working on this page</p>
-                    </div>
+                </div>
+
+                <div className='card card-custom'>
+                    <div className='card-body'>We're still working on this page</div>
                 </div>
             </div>
         </>
