@@ -13,8 +13,8 @@ import {
     listSubusers,
     listUserLogins,
     listUserSessions,
-} from '../../services/user.service'
-import { TabPanel, TabNavigate, TabDataWrapper } from './helpers/helpers'
+} from './user.service'
+import { TabPanel, TabNavigate, TabDataWrapper } from '../helpers/helpers'
 
 enum UserCardTabs {
     Profile = 'Profile',

@@ -8,7 +8,7 @@ interface ICustomInput {
 
 interface ICustomCheckbox extends ICustomInput {}
 
-const CustomCheckbox = ({ currentValue, id, title }: ICustomCheckbox) => {
+export const CustomCheckbox = ({ currentValue, id, title }: ICustomCheckbox) => {
     const [value, setValue] = useState<number>(currentValue)
 
     const handleChange = () => {
@@ -33,5 +33,3 @@ const CustomCheckbox = ({ currentValue, id, title }: ICustomCheckbox) => {
         </div>
     )
 }
-
-export { CustomCheckbox }

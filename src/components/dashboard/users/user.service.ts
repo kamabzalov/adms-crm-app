@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { getToken } from './utils'
-import { API_URL } from '../app-consts'
+import { getToken } from '../../../common/utils'
+import { API_URL } from '../../../common/app-consts'
+import { ActionStatus } from '../../../common/models'
 
 export interface User {
     created: string
@@ -10,10 +11,6 @@ export interface User {
     updated: string
     username: string
     useruid: string
-}
-
-export interface ActionStatus {
-    status: string
 }
 
 export const createUser = (loginname: string, loginpassword: string) => {
@@ -54,10 +51,30 @@ export const getUsers = () => {
         .then((response) => response.data)
 }
 
+export const getDeletedUsers = () => {
+    return axios
+        .get<User[]>(`${API_URL}user/0/listdeleted`, {
+            headers: { Authorization: `Bearer ${getToken()}` },
+        })
+        .then((response) => response.data)
+}
+
 export const deleteUser = (uid: string) => {
     return axios
         .post<ActionStatus>(
             `${API_URL}user/${uid}/delete`,
+            {},
+            {
+                headers: { Authorization: `Bearer ${getToken()}` },
+            }
+        )
+        .then((response) => response.data)
+}
+
+export const undeleteUser = (uid: string) => {
+    return axios
+        .post<ActionStatus>(
+            `${API_URL}user/${uid}/undelete`,
             {},
             {
                 headers: { Authorization: `Bearer ${getToken()}` },

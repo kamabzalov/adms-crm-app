@@ -1,7 +1,9 @@
-const TableHeader = ({ data }: { data: any[] }) => {
+import { IMicroserviceServerData } from '../interfaces/interfaces'
+
+const TableHeader = ({ data }: { data: IMicroserviceServerData[] }) => {
     const columns = new Set<string>()
 
-    data.forEach((obj: any): void => {
+    data.forEach((obj: IMicroserviceServerData): void => {
         Object.keys(obj).forEach((key: string): void => {
             columns.add(key)
         })
@@ -17,9 +19,9 @@ const TableHeader = ({ data }: { data: any[] }) => {
     )
 }
 
-const TableBody = ({ data }: { data: any[] }) => (
+const TableBody = ({ data }: { data: IMicroserviceServerData[] }) => (
     <tbody>
-        {data.map((row: any[], index: number) => (
+        {data.map((row: IMicroserviceServerData, index: number) => (
             <tr key={`${data}-${index}`}>
                 {Object.values(row).map((cell: string) => (
                     <td key={`${Math.random()}-${cell}-${index}`}>{cell}</td>
@@ -29,7 +31,7 @@ const TableBody = ({ data }: { data: any[] }) => (
     </tbody>
 )
 
-export const renderTable = (data: any[]) => {
+export const renderTable = (data: IMicroserviceServerData[] | any[]) => {
     return (
         <div className='w-100 table-responsive table-responsive-horizontal'>
             <table className='table table-row-dashed table-row-gray-300 gy-7'>
