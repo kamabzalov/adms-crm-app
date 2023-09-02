@@ -178,13 +178,17 @@
     // Integration
     .app-aside {
         // Header
-        [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true']:not([data-kt-app-aside-push-header='true'])
+        [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true']:not(
+                [data-kt-app-aside-push-header='true']
+            )
             & {
             top: var(--#{$prefix}app-header-height);
         }
 
         // Toolbar
-        [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true']:not([data-kt-app-aside-push-toolbar='true'])
+        [data-kt-app-aside-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true']:not(
+                [data-kt-app-aside-push-toolbar='true']
+            )
             & {
             top: calc(
                 var(--#{$prefix}app-header-height) + var(--#{$prefix}app-toolbar-height, 0px)

@@ -180,7 +180,8 @@
                     // Animation
                     @if ($menu-dropdown-animation == true) {
                         // Move up
-                        animation: menu-sub-dropdown-animation-fade-in
+                        animation:
+                            menu-sub-dropdown-animation-fade-in
                                 #{$menu-dropdown-animation-speed}
                                 ease
                                 1,

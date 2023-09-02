@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'fonticon';
-    src: url('./fonticon.ttf?8e8dbe1ea9ce4a70bc69a61ddae8f305') format('truetype'),
+    src:
+        url('./fonticon.ttf?8e8dbe1ea9ce4a70bc69a61ddae8f305') format('truetype'),
         url('./fonticon.woff?8e8dbe1ea9ce4a70bc69a61ddae8f305') format('woff'),
         url('./fonticon.woff2?8e8dbe1ea9ce4a70bc69a61ddae8f305') format('woff2'),
         url('./fonticon.eot?8e8dbe1ea9ce4a70bc69a61ddae8f305#iefix') format('embedded-opentype'),

@@ -1,7 +1,8 @@
 @font-face {
     font-family: 'keenicons-outline';
     src: url('fonts/keenicons-outline.eot?fzo4bm');
-    src: url('fonts/keenicons-outline.eot?fzo4bm#iefix') format('embedded-opentype'),
+    src:
+        url('fonts/keenicons-outline.eot?fzo4bm#iefix') format('embedded-opentype'),
         url('fonts/keenicons-outline.ttf?fzo4bm') format('truetype'),
         url('fonts/keenicons-outline.woff?fzo4bm') format('woff'),
         url('fonts/keenicons-outline.svg?fzo4bm#keenicons-outline') format('svg');

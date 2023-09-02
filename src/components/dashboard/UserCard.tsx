@@ -16,6 +16,7 @@ import {
 } from 'services/user.service';
 import { TabPanel, TabNavigate, TabDataWrapper } from './helpers/helpers';
 
+// eslint-disable-next-line no-unused-vars
 enum UserCardTabs {
     Profile = 'Profile',
     ExtendedInfo = 'Extended info',

@@ -2,7 +2,8 @@ $flaticon-font: 'flaticon';
 
 @font-face {
     font-family: $flaticon-font;
-    src: url('./flaticon.ttf?d63d4800091cd3eedf4d33622a251715') format('truetype'),
+    src:
+        url('./flaticon.ttf?d63d4800091cd3eedf4d33622a251715') format('truetype'),
         url('./flaticon.woff?d63d4800091cd3eedf4d33622a251715') format('woff'),
         url('./flaticon.woff2?d63d4800091cd3eedf4d33622a251715') format('woff2'),
         url('./flaticon.eot?d63d4800091cd3eedf4d33622a251715#iefix') format('embedded-opentype'),
