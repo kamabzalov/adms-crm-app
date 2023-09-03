@@ -6,7 +6,9 @@ import { CustomDropdown, TableHead } from './helpers/helpers';
 // eslint-disable-next-line no-unused-vars
 enum UsersColumns {
     // eslint-disable-next-line
-    Microservice = 'User name',
+    UserID = 'User ID',
+    // eslint-disable-next-line
+    Username = 'User name',
     // eslint-disable-next-line
     Actions = 'Actions',
 }
@@ -42,19 +44,17 @@ export default function Users() {
             <div className='card'>
                 <div className='card-body'>
                     <div className='table-responsive'>
-                        <table
-                            id='kt_table_users'
-                            className='table align-middle table-row-dashed fs-6 gy-5 no-footer'
-                        >
+                        <table className='table align-middle table-row-dashed fs-6 gy-3 no-footer'>
                             <TableHead columns={usersColumnsArray} />
                             <tbody className='text-gray-600 fw-bold'>
                                 {users.map((user) => {
                                     return (
                                         <tr key={user.useruid}>
+                                            <td>{user.index}</td>
                                             <td>
                                                 <Link
                                                     to={`user/${user.useruid}`}
-                                                    className='text-gray-800 text-hover-primary mb-1'
+                                                    className='text-gray-800 text-hover-primary mb-1 text-decoration-underline'
                                                 >
                                                     {user.username}
                                                 </Link>
