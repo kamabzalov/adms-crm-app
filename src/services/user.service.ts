@@ -10,6 +10,8 @@ export interface User {
     updated: string;
     username: string;
     useruid: string;
+    parentusername: string;
+    isAdmin: number;
 }
 
 export interface ActionStatus {
