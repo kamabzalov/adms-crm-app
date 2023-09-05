@@ -21,28 +21,19 @@ export function DashboardHeader() {
                     <div className='app-header-menu app-header-mobile-drawer align-items-stretch'>
                         <div className='menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px 2 px-lg-0'>
                             <div className='menu-item me-lg-1'>
-                                <Link
-                                    className='menu-link py-3 text-hover-primary'
-                                    to={'/dashboard'}
-                                >
+                                <Link className='menu-link py-3' to={'/dashboard'}>
                                     <i className='ki-outline ki-user-tick fs-2 m-2'></i>
                                     <span className='menu-title'>Users</span>
                                 </Link>
                             </div>
                             <div className='menu-item me-lg-1'>
-                                <Link
-                                    className='menu-link py-3 text-hover-primary'
-                                    to={'/dashboard/billing'}
-                                >
+                                <Link className='menu-link py-3' to={'/dashboard/billing'}>
                                     <i className='ki-outline ki-bill fs-2 m-2'></i>
                                     <span className='menu-title'>Billing</span>
                                 </Link>
                             </div>
                             <div className='menu-item me-lg-1'>
-                                <Link
-                                    className='menu-link py-3 text-hover-primary'
-                                    to={'/dashboard/reports'}
-                                >
+                                <Link className='menu-link py-3' to={'/dashboard/reports'}>
                                     <i className='ki-outline ki-notepad fs-2 m-2'></i>
                                     <span className='menu-title'>Reports</span>
                                 </Link>
