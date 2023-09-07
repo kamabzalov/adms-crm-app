@@ -1,11 +1,16 @@
 import clsx from 'clsx';
-import { useState } from 'react';
-import { renderTable } from './renderTableHelper';
-import { ITabValues } from '../interfaces/interfaces';
-import { CustomCheckbox } from './renderInputsHelper';
-import { CustomDropdown } from './renderDropdownHelper';
+import { PropsWithChildren } from 'react';
+import { TabValues } from 'common/interfaces/TabValues';
+import { CustomCheckbox } from 'components/dashboard/helpers/renderInputsHelper';
+import { renderTable } from 'components/dashboard/helpers/renderTableHelper';
 
-const renderList = (data: any, checkbox: boolean = false) => {
+interface RenderListArgs {
+    data: string[] | string;
+    checkbox?: boolean;
+    action?: (value: [string, number]) => void;
+}
+
+export const renderList = ({ data, checkbox, action }: RenderListArgs) => {
     if (typeof data !== 'object' || data === null) {
         return (
             <div>
@@ -25,15 +30,16 @@ const renderList = (data: any, checkbox: boolean = false) => {
             if (Array.isArray(value)) {
                 return <div key={`${key}-${index}`}>{renderTable(value)}</div>;
             }
-            return <div key={`${key}-${index}`}>{renderList(value)}</div>;
+            return <div key={`${key}-${index}`}>{renderList({ data: value })}</div>;
         } else {
             const activeCheckbox = checkbox && (Number(value) === 0 || Number(value) === 1);
             return activeCheckbox ? (
                 <CustomCheckbox
-                    key={`${key}-${index}`}
+                    key={key}
                     currentValue={value}
                     id={key}
-                    title={title}
+                    title={key}
+                    action={action}
                 />
             ) : (
                 <div key={`${key}-${index}`} className='d-flex align-items-center mb-4'>
@@ -69,7 +75,7 @@ export const TabNavigate = ({
     </li>
 );
 
-export const TabPanel = ({ activeTab, tabName, children, tabId }: ITabValues) => (
+export const TabPanel = ({ activeTab, tabName, children, tabId }: TabValues) => (
     <div
         className={clsx('tab-pane vw-90 mx-auto', {
             active: activeTab === tabName,
@@ -83,31 +89,15 @@ export const TabPanel = ({ activeTab, tabName, children, tabId }: ITabValues) =>
 
 export const TabDataWrapper = ({
     data,
-    checkbox = false,
-}: {
-    data: string;
-    checkbox?: boolean;
-}) => {
-    // eslint-disable-next-line no-unused-vars
-    enum ViewTypes {
-        // eslint-disable-next-line no-unused-vars
-        JSON = 'JSON view',
-        // eslint-disable-next-line no-unused-vars
-        GENERAL = 'General view',
-    }
-    const viewTypesArray: string[] = Object.values(ViewTypes) as string[];
-
-    const [activeTab, setActiveTab] = useState(ViewTypes.JSON);
-
-    const handleTabClick = (tab: any) => {
-        setActiveTab(tab);
-    };
-
+    checkbox,
+    action,
+    children,
+}: PropsWithChildren<RenderListArgs>) => {
     if (!data) return <></>;
-    const parsedData = JSON.parse(data);
+    const parsedData = typeof data === 'string' && JSON.parse(data);
     const renderContent = () => {
         if (typeof parsedData === 'object' && !Array.isArray(parsedData)) {
-            return renderList(parsedData, checkbox);
+            return renderList({ data: parsedData, checkbox, action });
         } else {
             return renderTable(parsedData);
         }
@@ -118,29 +108,11 @@ export const TabDataWrapper = ({
             <div className='row g-5 g-xl-10 mb-5 mb-xl-10'>
                 <div className='col-12'>
                     <div className='card card-custom mb-5 vw-90 mx-auto'>
-                        <div className='card-header d-flex flex-column justify-content-end pb-0'>
-                            <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap'>
-                                {viewTypesArray.map((tab) => (
-                                    <TabNavigate
-                                        key={tab}
-                                        activeTab={activeTab}
-                                        tab={tab}
-                                        onTabClick={handleTabClick}
-                                    />
-                                ))}
-                            </ul>
-                        </div>
                         <div className='tab-content' id='myTabContentInner'>
-                            <TabPanel activeTab={activeTab} tabName={ViewTypes.JSON}>
-                                <div className='card-body'>
-                                    <pre className='fs-4'>{data}</pre>
-                                </div>
-                            </TabPanel>
-                            <TabPanel activeTab={activeTab} tabName={ViewTypes.GENERAL}>
-                                <div className='card-body'>
-                                    {parsedData ? renderContent() : 'No data available'}
-                                </div>
-                            </TabPanel>
+                            <div className='card-body'>
+                                {parsedData ? renderContent() : 'No data available'}
+                                {children}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,6 +120,3 @@ export const TabDataWrapper = ({
         </>
     );
 };
-
-export { CustomDropdown };
-export { TableHead } from './renderTableHelper';
