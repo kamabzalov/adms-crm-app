@@ -33,7 +33,6 @@ export const UserPermissionsModal = ({
     };
 
     useEffect(() => {
-        setIsLoading(true);
         if (useruid) {
             getUserPermissions(useruid).then(async (response) => {
                 const stringifiedResponse = JSON.stringify(response, null, 2);
@@ -61,18 +60,17 @@ export const UserPermissionsModal = ({
         setModifiedJSON(filterObjectValues(parsedUserPermission));
     };
 
-    const handleSetUserPermissions = (): void => {
-        setIsLoading(true);
-        if (useruid) {
-            setUserPermissions(useruid, JSON.parse(userPermissionsJSON)).then((response) => {
-                try {
-                    response.status = 200;
+    const handleSetUserPermissions = async (): Promise<void> => {
+        try {
+            if (useruid) {
+                const response = await setUserPermissions(useruid, JSON.parse(userPermissionsJSON));
+                if (response.status === 200) {
                     onClose();
-                } catch (error) {
-                } finally {
-                    setIsLoading(false);
                 }
-            });
+            }
+        } catch (err) {
+        } finally {
+            setIsLoading(false);
         }
     };
 
