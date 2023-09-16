@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { TabDataWrapper, TabNavigate, TabPanel } from 'components/dashboard/helpers/helpers';
 import { PrimaryButton } from 'components/dashboard/smallComponents/buttons/PrimaryButton';
 import {
+    getUserProfile,
     getUserExtendedInfo,
+    getUserShortInfo,
     getUserLocations,
     getUserPermissions,
-    getUserProfile,
     getUserSettings,
-    getUserShortInfo,
-    listSalesPersons,
-    listSubusers,
-    listUserLogins,
     listUserSessions,
+    listUserLogins,
+    listSubusers,
+    listSalesPersons,
     setUserPermissions,
 } from 'services/user.service';
 
