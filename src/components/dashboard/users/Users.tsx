@@ -88,8 +88,6 @@ export default function Users() {
             if (srcuid) {
                 const response: any = await copyUser(srcuid);
                 if (response.status === 'OK') {
-                    const newUseruid = response.useruid;
-                    navigate(`user/${newUseruid}`);
                     handleShowToast({
                         message: 'User successfully copied',
                         type: 'success',
