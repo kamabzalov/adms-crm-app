@@ -15,7 +15,7 @@ export interface User {
 }
 
 export enum Status {
-    'OK',
+    OK = 'OK',
 }
 
 type Method = 'GET' | 'POST';
