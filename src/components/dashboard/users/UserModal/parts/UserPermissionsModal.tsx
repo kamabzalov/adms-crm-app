@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { renderList } from 'components/dashboard/helpers/helpers';
 import { PrimaryButton } from 'components/dashboard/smallComponents/buttons/PrimaryButton';
-import { getUserPermissions, setUserPermissions } from 'services/user.service';
+import { Status, getUserPermissions, setUserPermissions } from 'services/user.service';
+import { useToast } from 'components/dashboard/helpers/renderToastHelper';
+import { AxiosError } from 'axios';
 
 interface UserPermissionsModalProps {
     onClose: () => void;
@@ -18,6 +20,8 @@ export const UserPermissionsModal = ({
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
+    const { handleShowToast } = useToast();
+
     const filterObjectValues = (json: Record<string, string | number>) => {
         const filteredObj: any = {};
         for (const key in json) {
@@ -33,6 +37,7 @@ export const UserPermissionsModal = ({
     };
 
     useEffect(() => {
+        setIsLoading(true);
         if (useruid) {
             getUserPermissions(useruid).then(async (response) => {
                 const stringifiedResponse = JSON.stringify(response, null, 2);
@@ -64,11 +69,17 @@ export const UserPermissionsModal = ({
         try {
             if (useruid) {
                 const response = await setUserPermissions(useruid, JSON.parse(userPermissionsJSON));
-                if (response.status === 200) {
+                if (response.status === Status.OK) {
+                    handleShowToast({
+                        message: 'Permissions successfully saved',
+                        type: 'success',
+                    });
                     onClose();
                 }
             }
         } catch (err) {
+            const { message } = err as Error | AxiosError;
+            handleShowToast({ message, type: 'danger' });
         } finally {
             setIsLoading(false);
         }
