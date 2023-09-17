@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { getToken } from './utils';
 import { API_URL } from '../app-consts';
 
@@ -14,208 +14,102 @@ export interface User {
     isAdmin: number;
 }
 
-export interface ActionStatus {
-    status: string;
+export enum Status {
+    'OK',
 }
 
-export const createUser = (loginname: string, loginpassword: string) => {
-    return axios.post(
-        API_URL + 'user/' + 0 + '/user',
-        { loginname: loginname, loginpassword: loginpassword },
-        {
+type Method = 'GET' | 'POST';
+
+type ActionStatus = {
+    status: Status;
+};
+
+const fetchApiData = async <T>(method: Method, url: string, data?: any): Promise<T> => {
+    try {
+        const response: AxiosResponse<T> = await axios({
+            method: method,
+            url: API_URL + url,
+            data: data,
             headers: { Authorization: `Bearer ${getToken()}` },
-        }
-    );
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 };
 
-export const createOrUpdateUser = (loginname: string, loginpassword: string, uid: string = '0') => {
-    return axios.post(
-        API_URL + 'user/' + uid + '/user',
-        { loginname: loginname, loginpassword: loginpassword },
-        {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        }
-    );
+export const updateUser = (
+    loginname: string,
+    loginpassword: string,
+    uid: string = '0'
+): Promise<any> => {
+    return fetchApiData('POST', `user/${uid}/user`, { loginname, loginpassword });
 };
 
-export const copyUser = (srcuid: string) => {
-    return axios
-        .post<ActionStatus>(
-            `${API_URL}user/${srcuid}/copyuser`,
-            {},
-            {
-                headers: { Authorization: `Bearer ${getToken()}` },
-            }
-        )
-        .then((response) => response.data);
+export const copyUser = (srcuid: string): Promise<any> => {
+    return fetchApiData<ActionStatus>('POST', `user/${srcuid}/copyuser`);
 };
 
-export const setUserOptionalData = (uid: string, data: any) => {
-    return axios.post(
-        API_URL + 'user/' + uid + '/set',
-        { ...data },
-        {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        }
-    );
+export const setUserOptionalData = (uid: string, data: any): Promise<any> => {
+    return fetchApiData('POST', `user/${uid}/set`, data);
 };
 
-export const getUsers = (useruid = 0) => {
-    return axios
-        .get<User[]>(`${API_URL}user/${useruid}/listclients`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const getUsers = (useruid = '0'): Promise<User[]> => {
+    return fetchApiData<User[]>('GET', `user/${useruid}/listclients`);
 };
 
-export const deleteUser = (uid: string) => {
-    return axios
-        .post<ActionStatus>(
-            `${API_URL}user/${uid}/delete`,
-            {},
-            {
-                headers: { Authorization: `Bearer ${getToken()}` },
-            }
-        )
-        .then((response) => response.data);
+export const deleteUser = (uid: string): Promise<any> => {
+    return fetchApiData<ActionStatus>('POST', `user/${uid}/delete`);
 };
 
-export const setUserPermissions = (uid: string, data: any) => {
-    return axios.post(
-        API_URL + 'user/' + uid + '/permissions',
-        { ...data },
-        {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        }
-    );
+export const setUserPermissions = (uid: string, data: any): Promise<any> => {
+    return fetchApiData('POST', `user/${uid}/permissions`, data);
 };
 
-export const getUserPermissions = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/permissions`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const getUserPermissions = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/permissions`);
 };
 
-export const getUserExtendedInfo = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/info`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const getUserExtendedInfo = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/info`);
 };
 
-export const getUserLocations = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/locations`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const getUserLocations = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/locations`);
 };
 
-export const setUserProfile = (uid: string, profile: any) => {
-    return axios.post(
-        API_URL + 'user/' + uid + '/profile',
-        { ...profile },
-        {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        }
-    );
+export const getUserProfile = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/profile`);
 };
 
-export const getUserProfile = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/profile`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const setUserSettings = (uid: string, data: any): Promise<any> => {
+    return fetchApiData('POST', `user/${uid}/settings`, data);
 };
 
-export const setUserSettings = (uid: string, data: any) => {
-    return axios.post(API_URL + 'user/' + uid + '/settings', data, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-    });
+export const getUserSettings = (uid: string): Promise<any> => {
+    return fetchApiData('GET', `user/${uid}/settings`);
 };
 
-export const getUserSettings = (uid: string) => {
-    return axios
-        .get(`${API_URL}user/${uid}/settings`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const listUserSessions = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/sessions`);
 };
 
-export const checkToken = (token: string) => {
-    return axios.get(API_URL + 'user/' + token + '/token', {
-        headers: { Authorization: `Bearer ${getToken()}` },
-    });
+export const killSession = (uid: string): Promise<any> => {
+    return fetchApiData('POST', `user/${uid}/session`);
 };
 
-export const listUserSessions = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/sessions`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const listUserLogins = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/logins`);
 };
 
-export const killSession = (uid: string) => {
-    return axios.post(`${API_URL}user/${uid}/session`, null, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-    });
+export const listSubusers = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/subusers`);
 };
 
-export const checkSession = (uid: string) => {
-    return axios.get(API_URL + 'user/' + uid + '/session', {
-        headers: { Authorization: `Bearer ${getToken()}` },
-    });
+export const listSalesPersons = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/salespersons`);
 };
 
-export const listUserLogins = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/logins`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
-};
-
-export const listSubusers = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/subusers`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
-};
-
-export const listSalesPersons = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/salespersons`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
-};
-
-export const getUserShortInfo = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/username`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
-};
-
-export const getAllUIPermissions = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/listpermissions`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
-};
-
-export const getAllUITypes = (uid: string) => {
-    return axios
-        .get<string>(`${API_URL}user/${uid}/listusertypes`, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-        })
-        .then((response) => response.data);
+export const getUserShortInfo = (uid: string): Promise<string> => {
+    return fetchApiData<string>('GET', `user/${uid}/username`);
 };
