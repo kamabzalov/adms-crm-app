@@ -88,6 +88,8 @@ export default function Users() {
             if (srcuid) {
                 const response: any = await copyUser(srcuid);
                 if (response.status === 'OK') {
+                    const newUseruid = response.useruid;
+                    navigate(`user/${newUseruid}`);
                     handleShowToast({
                         message: 'User successfully copied',
                         type: 'success',
@@ -125,7 +127,7 @@ export default function Users() {
         try {
             if (userId) {
                 const response = await killSession(userId);
-                if (response.status === 200) {
+                if (response.status === 'OK') {
                     handleShowToast({
                         message: 'User session successfully closed',
                         type: 'success',
