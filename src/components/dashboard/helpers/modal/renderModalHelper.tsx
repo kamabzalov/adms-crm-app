@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
 type CustomModalProps = {
     onClose: () => void;
@@ -24,11 +24,18 @@ const UserModalHeader = ({ onClose, title }: CustomModalProps): JSX.Element => {
     );
 };
 
-const CustomModal = ({
+export const CustomModal = ({
     title,
     onClose,
     children,
 }: PropsWithChildren<CustomModalProps>): JSX.Element => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     return (
         <>
             <div
@@ -49,5 +56,3 @@ const CustomModal = ({
         </>
     );
 };
-
-export { CustomModal };
