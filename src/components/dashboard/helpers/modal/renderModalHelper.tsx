@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useCallback, useEffect } from 'react';
 
 type CustomModalProps = {
     onClose: () => void;
@@ -24,17 +24,29 @@ const UserModalHeader = ({ onClose, title }: CustomModalProps): JSX.Element => {
     );
 };
 
-export const CustomModal = ({
+const CustomModal = ({
     title,
     onClose,
     children,
 }: PropsWithChildren<CustomModalProps>): JSX.Element => {
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        },
+        [onClose]
+    );
+
     useEffect(() => {
         document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', handleKeyDown);
+
         return () => {
             document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [handleKeyDown]);
 
     return (
         <>
@@ -56,3 +68,5 @@ export const CustomModal = ({
         </>
     );
 };
+
+export { CustomModal };
