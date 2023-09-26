@@ -11,6 +11,7 @@ import { CustomDropdown } from 'components/dashboard/helpers/renderDropdownHelpe
 import { User, getUsers, copyUser, deleteUser, killSession, Status } from 'services/user.service';
 import { useToast } from '../helpers/renderToastHelper';
 import { AxiosError } from 'axios';
+import { UserConfirmModal } from './UserModal/parts/UserConfirmModal';
 
 enum UsersColumns {
     ID = 'Index',
@@ -26,6 +27,7 @@ export default function Users() {
     const { useruid: currentUseruid } = JSON.parse(localStorage.getItem('admss-admin-user') ?? '');
     const [users, setUsers] = useState<User[]>([]);
     const [editUserModalEnabled, setEditUserModalEnabled] = useState<boolean>(false);
+    const [confirmModalEnabled, setConfirmModalEnabled] = useState<boolean>(false);
     const [userPermissionsModalEnabled, setUserPermissionsModalEnabled] = useState<boolean>(false);
     const [userSettingsModalEnabled, setUserSettingssModalEnabled] = useState<boolean>(false);
     const [userOptionalModalEnabled, setUserOptionalsModalEnabled] = useState<boolean>(false);
@@ -53,6 +55,10 @@ export default function Users() {
     const handleEditUserModalOpen = ({ useruid, username }: User) => {
         setSelectedUser({ ...selectedUser, useruid, username: username });
         setEditUserModalEnabled(true);
+    };
+    const handleConfirmModalOpen = ({ useruid, username }: User) => {
+        setSelectedUser({ ...selectedUser, useruid, username: username });
+        setConfirmModalEnabled(true);
     };
     const handleUserPermissonsModalOpen = ({ useruid, username }: User) => {
         setSelectedUser({ ...selectedUser, useruid, username: username });
@@ -107,14 +113,16 @@ export default function Users() {
         setLoaded(false);
         try {
             if (userId) {
-                const response = await deleteUser(userId);
-                if (response.status === Status.OK) {
-                    handleShowToast({
-                        message: 'User successfully deleted',
-                        type: 'success',
-                    });
-                    updateUsers();
-                }
+                /* eslint-disable no-console */
+                console.log(userId);
+                // const response = await deleteUser(userId);
+                // if (response.status === Status.OK) {
+                //     handleShowToast({
+                //         message: 'User successfully deleted',
+                //         type: 'success',
+                //     });
+                //     updateUsers();
+                // }
             }
         } catch (err) {
             const { message } = err as Error | AxiosError;
@@ -143,6 +151,18 @@ export default function Users() {
 
     return (
         <>
+            {confirmModalEnabled && (
+                <CustomModal
+                    onClose={() => setConfirmModalEnabled(false)}
+                    title={'Confirm user delete'}
+                >
+                    <UserConfirmModal
+                        onConfirm={() => handleMoveToTrash(selectedUser.useruid)}
+                        onClose={() => setConfirmModalEnabled(false)}
+                        username={selectedUser.username}
+                    />
+                </CustomModal>
+            )}
             {editUserModalEnabled && (
                 <CustomModal
                     onClose={() => setEditUserModalEnabled(false)}
@@ -258,8 +278,8 @@ export default function Users() {
                                                                 {
                                                                     menuItemName: 'Delete user',
                                                                     menuItemAction: () =>
-                                                                        handleMoveToTrash(
-                                                                            user.useruid
+                                                                        handleConfirmModalOpen(
+                                                                            user
                                                                         ),
                                                                 },
                                                                 {
