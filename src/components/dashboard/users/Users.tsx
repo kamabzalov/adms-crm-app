@@ -110,7 +110,6 @@ export default function Users() {
     };
 
     const handleMoveToTrash = async (userId: string, username: string): Promise<void> => {
-        setLoaded(false);
         try {
             if (userId) {
                 const response = await deleteUser(userId);
