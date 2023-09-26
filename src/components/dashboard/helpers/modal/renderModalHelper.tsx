@@ -70,7 +70,7 @@ export const CustomModal = ({
                 <div className='modal-dialog modal-dialog-centered mw-650px'>
                     <div className='modal-content'>
                         <UserModalHeader onClose={onClose} title={title} />
-                        <div className='modal-body scroll-y mx-5 mx-xl-15 my-7'>{children}</div>
+                        <div className='modal-body scroll-y my-7'>{children}</div>
                         {footerAction && (
                             <UserModalFooter onClose={onClose} footerAction={footerAction} />
                         )}
