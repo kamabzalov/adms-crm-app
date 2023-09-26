@@ -13,8 +13,8 @@ export const UserConfirmModal = ({
 }: UserConfirmModalProps): JSX.Element => {
     return (
         <>
-            <div className='fv-row mb-8 text-center fs-4'>
-                You want to delete user
+            <div className='fv-row mb-8 fs-4'>
+                You want to delete user?
                 <div className='my-4'>
                     <b>{username}</b>
                 </div>
