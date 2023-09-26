@@ -2,7 +2,7 @@ interface ButtonProps {
     buttonText: string;
     disabled?: boolean;
     icon?: string;
-    type?: 'primary' | 'warning';
+    type?: 'primary' | 'light';
     buttonClickAction?: () => void;
 }
 

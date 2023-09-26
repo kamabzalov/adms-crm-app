@@ -116,7 +116,7 @@ export default function Users() {
                 const response = await deleteUser(userId);
                 if (response.status === Status.OK) {
                     handleShowToast({
-                        message: `User ${username} successfully deleted`,
+                        message: `${username} successfully deleted`,
                         type: 'success',
                     });
                     setConfirmModalEnabled(false);
@@ -154,14 +154,11 @@ export default function Users() {
                 <CustomModal
                     onClose={() => setConfirmModalEnabled(false)}
                     title={'Confirm user delete'}
+                    footerAction={() =>
+                        handleMoveToTrash(selectedUser.useruid, selectedUser.username)
+                    }
                 >
-                    <UserConfirmModal
-                        onConfirm={() =>
-                            handleMoveToTrash(selectedUser.useruid, selectedUser.username)
-                        }
-                        onClose={() => setConfirmModalEnabled(false)}
-                        username={selectedUser.username}
-                    />
+                    <UserConfirmModal username={selectedUser.username} />
                 </CustomModal>
             )}
             {editUserModalEnabled && (
