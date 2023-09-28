@@ -12,8 +12,6 @@ import { User, getUsers, copyUser, deleteUser, killSession, Status } from 'servi
 import { useToast } from '../helpers/renderToastHelper';
 import { AxiosError } from 'axios';
 import { UserConfirmModal } from './UserModal/parts/UserConfirmModal';
-import { STORAGE_USER } from 'app-consts';
-import { LoginResponse } from 'services/auth.service';
 import { PrimaryButton } from '../smallComponents/buttons/PrimaryButton';
 
 enum UsersColumns {
@@ -27,8 +25,7 @@ enum UsersColumns {
 const usersColumnsArray: string[] = Object.values(UsersColumns) as string[];
 
 export default function Users() {
-    const userStorage = localStorage.getItem(STORAGE_USER);
-    const { useruid: currentUseruid }: LoginResponse = userStorage ? JSON.parse(userStorage) : {};
+    const { useruid: currentUseruid } = JSON.parse(localStorage.getItem('admss-admin-user') ?? '');
     const [users, setUsers] = useState<User[]>([]);
     const [addUserModalEnabled, setAddUserModalEnabled] = useState<boolean>(false);
     const [editUserModalEnabled, setEditUserModalEnabled] = useState<boolean>(false);
@@ -127,6 +124,7 @@ export default function Users() {
                         type: 'success',
                     });
                     setConfirmModalEnabled(false);
+                    updateUsers();
                 }
             }
         } catch (err) {
