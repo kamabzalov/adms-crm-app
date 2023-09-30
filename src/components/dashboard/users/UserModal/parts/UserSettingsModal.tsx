@@ -4,18 +4,14 @@ import { PrimaryButton } from 'components/dashboard/smallComponents/buttons/Prim
 import { Status, getUserSettings, setUserSettings } from 'services/user.service';
 import { useToast } from 'components/dashboard/helpers/renderToastHelper';
 import { AxiosError } from 'axios';
+import { renamedKeys } from 'app-consts';
 
 interface UserSettingsModalProps {
     onClose: () => void;
     useruid: string;
-    username: string;
 }
 
-export const UserSettingsModal = ({
-    onClose,
-    useruid,
-    username,
-}: UserSettingsModalProps): JSX.Element => {
+export const UserSettingsModal = ({ onClose, useruid }: UserSettingsModalProps): JSX.Element => {
     const [settings, setSettings] = useState<any>({});
     const [initialUserSettings, setInitialUserSettings] = useState<any>({});
     const [allSettings, setAllSettings] = useState<any>({});
@@ -66,7 +62,7 @@ export const UserSettingsModal = ({
                 const response = await setUserSettings(useruid, newSettings);
                 if (response.status === Status.OK) {
                     handleShowToast({
-                        message: `<strong>${username}</strong> settings successfully saved`,
+                        message: 'User settings successfully saved',
                         type: 'success',
                     });
                     onClose();
@@ -88,26 +84,29 @@ export const UserSettingsModal = ({
     return (
         <>
             {settings &&
-                Object.entries(settings).map(([setting, value]: any) => {
-                    return (
-                        <div className='fv-row mb-8' key={setting}>
-                            <label
-                                htmlFor={setting}
-                                className='form-label fs-6 fw-bolder text-dark'
-                            >
-                                {setting}
-                            </label>
-                            <input
-                                disabled={disabledKeys.includes(setting)}
-                                className='form-control bg-transparent'
-                                name={setting}
-                                type={'text'}
-                                value={value}
-                                onChange={handleChangeUserSettings}
-                            />
-                        </div>
-                    );
-                })}
+                (Object.entries(settings) as [string, string | number][]).map(
+                    ([setting, value]) => {
+                        const settingName = renamedKeys[setting] || setting;
+                        return (
+                            <div className='fv-row mb-8' key={setting}>
+                                <label
+                                    htmlFor={setting}
+                                    className='form-label fs-6 fw-bolder text-dark'
+                                >
+                                    {settingName}
+                                </label>
+                                <input
+                                    disabled={disabledKeys.includes(setting)}
+                                    className='form-control bg-transparent'
+                                    name={setting}
+                                    type={'text'}
+                                    value={value}
+                                    onChange={handleChangeUserSettings}
+                                />
+                            </div>
+                        );
+                    }
+                )}
             <PrimaryButton
                 buttonText='Save permissions'
                 icon='check'
