@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios';
 import clsx from 'clsx';
 import * as Yup from 'yup';
-import { User, UserData } from 'common/interfaces/UserData';
+import { UserData } from 'common/interfaces/UserData';
 import { useToast, TOAST_DURATION } from 'components/dashboard/helpers/renderToastHelper';
 import { useFormik } from 'formik';
 import { HTMLInputTypeAttribute, useState } from 'react';
-import { createOrUpdateUser } from 'services/user.service';
+import { User, createOrUpdateUser } from 'services/user.service';
 
 interface UserModalProps {
     onClose: () => void;
@@ -96,7 +96,7 @@ export const UserModal = ({ onClose, user, updateData }: UserModalProps): JSX.El
                 const responseData = await createOrUpdateUser(reqData);
 
                 const message = user?.useruid
-                    ? `<strong>${username}</strong>'s password successfully updated`
+                    ? `<strong>${username}</strong> password successfully updated`
                     : `User <strong>${username}</strong> successfully created`;
 
                 if (!responseData.error) {
