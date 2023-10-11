@@ -1,18 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginResponse, logout } from 'services/auth.service';
 import { CustomDropdown } from './helpers/renderDropdownHelper';
+import { STORAGE_USER } from 'app-consts';
 
 export function DashboardHeader() {
     const navigate = useNavigate();
-    const { useruid, loginname }: LoginResponse = JSON.parse(
-        localStorage.getItem('admss-admin-user') ?? ''
-    );
+    const userStorage = localStorage.getItem(STORAGE_USER);
+    const { useruid, loginname }: LoginResponse = userStorage ? JSON.parse(userStorage) : {};
     const signOut = () => {
         if (useruid) {
             logout(useruid).then((response) => {
                 if (response.status) {
                     navigate('/');
-                    localStorage.removeItem('admss-admin-user');
+                    localStorage.removeItem(STORAGE_USER);
                 }
             });
         }
@@ -57,7 +57,7 @@ export function DashboardHeader() {
                                         to={`/dashboard/user/${useruid}`}
                                     >
                                         <i className='ki-outline ki-user-tick fs-2 m-2'></i>
-                                        <span className='menu-title'>{loginname}</span>
+                                        <span className='menu-title'>{loginname} card</span>
                                     </Link>
                                     <span
                                         onClick={() => signOut()}
