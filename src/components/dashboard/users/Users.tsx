@@ -81,13 +81,22 @@ export default function Users() {
     };
 
     const updateUsers = (): void => {
-        getUsers().then((response) => {
-            if (response.length) {
-                const filteredUsers = response.filter((user) => user?.useruid !== currentUseruid);
-                setUsers(filteredUsers);
-                setLoaded(true);
-            }
-        });
+        getUsers()
+            .then((response) => {
+                if (response.length) {
+                    const filteredUsers = response.filter(
+                        (user) => user?.useruid !== currentUseruid
+                    );
+                    setUsers(filteredUsers);
+                    setLoaded(true);
+                }
+            })
+            .catch((error) => {
+                handleShowToast({
+                    message: error.message,
+                    type: 'danger',
+                });
+            });
     };
 
     useEffect(() => {
