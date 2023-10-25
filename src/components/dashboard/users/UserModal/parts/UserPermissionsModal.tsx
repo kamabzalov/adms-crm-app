@@ -4,11 +4,7 @@ import { PrimaryButton } from 'components/dashboard/smallComponents/buttons/Prim
 import { Status, getUserPermissions, setUserPermissions } from 'services/user.service';
 import { useToast } from 'components/dashboard/helpers/renderToastHelper';
 import { AxiosError } from 'axios';
-import { UserPermissions } from 'common/interfaces/UserData';
-
-interface UserPermissionsRecord {
-    [key: string]: number;
-}
+import { UserPermissionsRecord } from 'common/interfaces/UserData';
 
 interface UserPermissionsModalProps {
     onClose: () => void;
@@ -19,7 +15,7 @@ interface UserPermissionsModalProps {
 
 const sortPermissionsKeys: ReadonlyArray<string> = ['Contacts', 'Deal'];
 
-const sortPermissions = (permissions: UserPermissions) => {
+const sortPermissions = (permissions: UserPermissionsRecord) => {
     const contactPermissions: UserPermissionsRecord = {};
     const dealsPermissions: UserPermissionsRecord = {};
     const otherPermissions: UserPermissionsRecord = {};
