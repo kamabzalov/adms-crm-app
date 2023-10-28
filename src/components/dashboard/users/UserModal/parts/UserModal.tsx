@@ -99,7 +99,7 @@ export const UserModal = ({ onClose, user, updateData }: UserModalProps): JSX.El
                     ? `<strong>${username}</strong> password successfully updated`
                     : `User <strong>${username}</strong> successfully created`;
 
-                if (!responseData.error) {
+                if (!responseData.error && !responseData.warning) {
                     handleShowToast({
                         message,
                         type: 'success',
@@ -107,7 +107,7 @@ export const UserModal = ({ onClose, user, updateData }: UserModalProps): JSX.El
                     onClose();
                     updateData && updateData();
                 } else {
-                    throw new Error(responseData.error);
+                    throw new Error(responseData?.error || responseData.warning);
                 }
             } catch (err) {
                 const { message } = err as Error | AxiosError;
