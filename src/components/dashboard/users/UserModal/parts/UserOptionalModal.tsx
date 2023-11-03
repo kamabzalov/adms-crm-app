@@ -35,19 +35,23 @@ const TabSwitcher = ({ tabs, activeTab, handleTabClick }) => {
     );
 };
 
-const hiddenKeys = ['locuid', 'useruid', 'index'];
-const disabledKeys = ['useruid', 'created', 'updated'];
+const hiddenKeys: readonly ['locuid', ...string[]] = ['locuid', 'useruid', 'index'];
+const disabledKeys: readonly string[] = ['useruid', 'created', 'updated'];
 
+const [locationuid] = hiddenKeys;
 export const UserOptionalModal = ({
     onClose,
     useruid,
     username,
 }: UserOptionalModalProps): JSX.Element => {
-    const [optional, setOptional] = useState<any[]>([]);
+    const [optional, setOptional] = useState<Record<string, string | number>[]>([]);
     const [activeTab, setActiveTab] = useState<string>('0');
-    const [initialUserOptional, setInitialUserOptional] = useState<any>([]);
+    const [initialUserOptional, setInitialUserOptional] = useState<
+        Record<string, string | number>[]
+    >([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+    const [locationKeys, setLocationKeys] = useState<string[]>([]);
 
     const { handleShowToast } = useToast();
 
@@ -78,6 +82,9 @@ export const UserOptionalModal = ({
 
                 const filteredOptional = responseOptional.map((option) => {
                     const filteredOption = Object.keys(option).reduce((acc, key) => {
+                        if (key === locationuid) {
+                            setLocationKeys((keys) => [...keys, option[key]]);
+                        }
                         if (!hiddenKeys.includes(key)) {
                             acc[key] = option[key];
                         }
@@ -116,11 +123,13 @@ export const UserOptionalModal = ({
     const handleSetUserOptional = async (): Promise<void> => {
         setIsLoading(true);
         if (useruid) {
-            const filteredOptional = optional.map((item) => {
+            const filteredOptional = optional.map((item, index) => {
                 const filteredItem = { ...item };
                 disabledKeys.forEach((key) => {
                     delete filteredItem[key];
                 });
+                filteredItem['locationuid'] = locationKeys[index];
+
                 return filteredItem;
             });
             const newOptional = { locations: filteredOptional };
