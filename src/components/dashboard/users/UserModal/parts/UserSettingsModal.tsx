@@ -32,8 +32,8 @@ import {
     contractGroup,
     leaseGroup,
 } from 'common/interfaces/users/UserGroups';
-import { renamedKeys } from 'app-consts';
-import { getUserSettings, setUserSettings } from 'services/user.service';
+import { renamedKeys } from 'common/app-consts';
+import { getUserSettings, setUserSettings } from '../../user.service';
 
 const getSettingType = (key: SettingKey): InputType => {
     if (disabledKeys.includes(key)) return InputType.DISABLED;
@@ -144,7 +144,7 @@ export const UserSettingsModal = ({
         (inputData: [string, number | string, SettingKey?]) => {
             const [name, value, group] = inputData;
 
-            let changedSettings;
+            let changedSettings: any;
 
             if (group && groupedSettings) {
                 groupedSettings[group].forEach((group) => {
@@ -229,7 +229,7 @@ export const UserSettingsModal = ({
                                                 name={key}
                                                 title={title}
                                                 group={groupName as SettingKey}
-                                                currentValue={Number(settings[key])}
+                                                currentValue={Number(settings[key as SettingKey])}
                                                 action={handleChangeUserSettings}
                                             />
                                         )}
