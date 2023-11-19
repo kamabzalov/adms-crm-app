@@ -1,30 +1,20 @@
 import { QueryRequestProvider } from 'common/core/QueryRequestProvider';
 import { QueryResponseProvider } from 'common/core/QueryResponseProvider';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CustomModal } from '../helpers/modal/renderModalHelper';
 import { PrimaryButton } from '../smallComponents/buttons/PrimaryButton';
 import { UsersListSearchComponent } from '../smallComponents/search/Search';
 import { UserModal } from './UserModal/parts/UserModal';
 import { UsersTable } from './table/UsersTable';
-import { UserContext } from 'Content';
-import { UserPermissions } from 'common/interfaces/UserData';
+import { STORAGE_USER } from 'app-consts';
 
 export const Users = () => {
     const [addUserModalEnabled, setAddUserModalEnabled] = useState<boolean>(false);
     const handleAddUserModalOpen = () => setAddUserModalEnabled(!addUserModalEnabled);
 
-    const { userPermission } = useContext(UserContext);
+    const userStorage = localStorage.getItem(STORAGE_USER);
 
-    const [permission, setPermission] = useState('');
-
-    useEffect(() => {
-        setPermission(userPermission);
-    }, [userPermission]);
-
-    const isUserPermission =
-        permission === UserPermissions.ADMIN ||
-        permission === UserPermissions.LOCAL_ADMIN ||
-        permission === UserPermissions.MANAGER;
+    const { isadmin } = userStorage && JSON.parse(userStorage);
 
     return (
         <QueryRequestProvider>
@@ -39,7 +29,7 @@ export const Users = () => {
                         <div className='tab-content' id='myTabContentInner'>
                             <div className='d-flex w-100 justify-content-between my-4'>
                                 <UsersListSearchComponent />
-                                {isUserPermission && (
+                                {!!isadmin && (
                                     <PrimaryButton
                                         icon='plus'
                                         buttonClickAction={handleAddUserModalOpen}
