@@ -111,14 +111,3 @@ export const selectInputKeys: readonly SettingKey[] = [
     SettingKey.INVENTORY_STATUS,
     SettingKey.SALE_TYPE,
 ];
-
-export interface UserSettingsResponse {
-    settings: Settings;
-    status: string;
-}
-
-export type UserSettingDeals =
-    | 'listdealtypes'
-    | 'listsaletypes'
-    | 'listdealstatuses'
-    | 'listinventorystatuses';
