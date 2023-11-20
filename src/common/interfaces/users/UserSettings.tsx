@@ -58,6 +58,10 @@ export const textInputKeys: readonly SettingKey[] = [
     SettingKey.ACCOUNT_PREFIX,
     SettingKey.ACCOUNT_START_NUMBER,
     SettingKey.ACCOUNT_SUFFIX,
+    SettingKey.STOCKNUM_PREFIX,
+    SettingKey.STOCKNUM_SUFFIX,
+    SettingKey.STOCKNUMTI_PREFIX,
+    SettingKey.STOCKNUMTI_SUFFIX,
     SettingKey.CONTRACT_DEF_INTEREST_RATE,
     SettingKey.CONTRACT_PAYMENT_FREQUENCY,
     SettingKey.FEE_DEF_DOCUMENTATION,
@@ -74,10 +78,6 @@ export const textInputKeys: readonly SettingKey[] = [
 ];
 
 export const checkboxInputKeys: readonly SettingKey[] = [
-    SettingKey.STOCKNUM_PREFIX,
-    SettingKey.STOCKNUM_SUFFIX,
-    SettingKey.STOCKNUMTI_PREFIX,
-    SettingKey.STOCKNUMTI_SUFFIX,
     SettingKey.STOCKNUM_SEQUENTIAL,
     SettingKey.STOCKNUMTI_SEQUENTIAL,
     SettingKey.STOCKNUMTI_FROM_SOLD_VEHICLE,
@@ -106,3 +106,14 @@ export const selectInputKeys: readonly SettingKey[] = [
     SettingKey.INVENTORY_STATUS,
     SettingKey.SALE_TYPE,
 ];
+
+export interface UserSettingsResponse {
+    settings: Settings;
+    status: string;
+}
+
+export type UserSettingDeals =
+    | 'listdealtypes'
+    | 'listsaletypes'
+    | 'listdealstatuses'
+    | 'listinventorystatuses';
