@@ -175,29 +175,15 @@ export const UserOptionalModal = ({
                                             return (
                                                 <div className='fv-row mb-4' key={setting}>
                                                     <div className='row'>
-                                                        <div className='col-6 d-flex align-items-center'>
+                                                        <div className='col-4 d-flex pt-4'>
                                                             <label
                                                                 htmlFor={setting}
                                                                 className='fs-6 fw-bolder text-dark'
                                                             >
                                                                 {settingName}
-                                                                {touched[setting] &&
-                                                                    errors[setting] && (
-                                                                        <div className='fv-plugins-message-container position-absolute'>
-                                                                            <div className='fv-help-block'>
-                                                                                <span role='alert'>
-                                                                                    {String(
-                                                                                        errors[
-                                                                                            setting
-                                                                                        ]
-                                                                                    )}
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
                                                             </label>
                                                         </div>
-                                                        <div className='col-6 d-flex align-items-center'>
+                                                        <div className='col-8 d-flex flex-column'>
                                                             <Field
                                                                 key={setting}
                                                                 autoComplete='off'
@@ -229,6 +215,18 @@ export const UserOptionalModal = ({
                                                                     )
                                                                 }
                                                             />
+                                                            {touched[setting] &&
+                                                                errors[setting] && (
+                                                                    <div className='fv-plugins-message-container'>
+                                                                        <div className='fv-help-block'>
+                                                                            <span role='alert'>
+                                                                                {String(
+                                                                                    errors[setting]
+                                                                                )}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
                                                         </div>
                                                     </div>
                                                 </div>
