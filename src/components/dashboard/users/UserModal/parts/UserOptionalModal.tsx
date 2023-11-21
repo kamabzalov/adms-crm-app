@@ -58,11 +58,11 @@ export const UserOptionalModal = ({
     const UserOptionalSchema = Yup.object().shape({
         locEmail1: Yup.string().email('Please enter valid email address'),
         locEmail2: Yup.string().email('Please enter valid email address'),
-        locPhone1: Yup.string().matches(/^[\d-]{10,16}$/, {
+        locPhone1: Yup.string().matches(/^[\d-]{7,11}$/, {
             message: 'Please enter a valid number with only digits/dashes.',
             excludeEmptyString: false,
         }),
-        locPhone2: Yup.string().matches(/^[\d-]{10,16}$/, {
+        locPhone2: Yup.string().matches(/^[\d-]{7,11}$/, {
             message: 'Please enter a valid number with only digits/dashes.',
             excludeEmptyString: false,
         }),
