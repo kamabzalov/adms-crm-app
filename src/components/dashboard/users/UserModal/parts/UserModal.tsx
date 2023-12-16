@@ -2,10 +2,12 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import { useToast } from 'components/dashboard/helpers/renderToastHelper';
 import { useFormik } from 'formik';
-import { HTMLInputTypeAttribute, useState } from 'react';
-import { createOrUpdateUser } from 'services/user.service';
+import { HTMLInputTypeAttribute, SetStateAction, useState } from 'react';
+import { createOrUpdateUser, getIsUsernameValid } from 'services/user.service';
 import { User, UserInputData } from 'common/interfaces/UserData';
 import { useQueryResponse } from 'common/core/QueryResponseProvider';
+import { Status } from 'common/interfaces/ActionStatus';
+import { throttle } from '_metronic/helpers/crud-helper/helpers';
 
 interface UserModalProps {
     onClose: () => void;
@@ -27,6 +29,9 @@ enum PassIcon {
 export const UserModal = ({ onClose, user }: UserModalProps): JSX.Element => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
     const [passwordFieldType, setPasswordFieldType] = useState<HTMLInputTypeAttribute>('password');
+
+    const [username, setUsername] = useState<string>('');
+    const [usernameError, setUsernameError] = useState<string>('');
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
     const [confirmPasswordFieldType, setConfirmPasswordFieldType] =
         useState<HTMLInputTypeAttribute>('password');
@@ -40,30 +45,34 @@ export const UserModal = ({ onClose, user }: UserModalProps): JSX.Element => {
 
     const { handleShowToast } = useToast();
 
-    const handleChangePasswordVisible = () => {
-        switch (isPasswordVisible) {
-            case true:
-                setPasswordFieldType('password');
-                setIsPasswordVisible(false);
-                break;
-            case false:
-                setPasswordFieldType('text');
-                setIsPasswordVisible(true);
-                break;
+    const togglePasswordVisibility = (
+        isVisible: boolean,
+        setIsVisible: {
+            (value: SetStateAction<boolean>): void;
+            (value: SetStateAction<boolean>): void;
+            (arg0: boolean): void;
+        },
+        setFieldType: {
+            (value: SetStateAction<HTMLInputTypeAttribute>): void;
+            (value: SetStateAction<HTMLInputTypeAttribute>): void;
+            (arg0: string): void;
         }
+    ) => {
+        const newFieldType = isVisible ? 'password' : 'text';
+        setFieldType(newFieldType);
+        setIsVisible(!isVisible);
+    };
+
+    const handleChangePasswordVisible = () => {
+        togglePasswordVisibility(isPasswordVisible, setIsPasswordVisible, setPasswordFieldType);
     };
 
     const handleChangeConfirmPasswordVisible = () => {
-        switch (isConfirmPasswordVisible) {
-            case true:
-                setConfirmPasswordFieldType('password');
-                setIsConfirmPasswordVisible(false);
-                break;
-            case false:
-                setConfirmPasswordFieldType('text');
-                setIsConfirmPasswordVisible(true);
-                break;
-        }
+        togglePasswordVisibility(
+            isConfirmPasswordVisible,
+            setIsConfirmPasswordVisible,
+            setConfirmPasswordFieldType
+        );
     };
 
     const addUserSchema = Yup.object().shape({
@@ -75,8 +84,27 @@ export const UserModal = ({ onClose, user }: UserModalProps): JSX.Element => {
             .required('Password confirmation is required'),
     });
 
+    const isUserNameValid = () => {
+        getIsUsernameValid(username).then((response) => {
+            if (response.status === Status.OK && response.exists === true) {
+                setUsernameError(`The ${response.username} is already exists!`);
+            }
+            if (response.status === Status.ERROR) {
+                setUsernameError(response.info);
+            }
+        });
+    };
+
+    const throttledValidation = throttle(isUserNameValid, 1500);
+
     const formik = useFormik({
         initialValues: initialUserData,
+        validate: async (values): Promise<Partial<UserModalData>> => {
+            setUsername(values.username);
+            await throttledValidation();
+
+            return { username: usernameError };
+        },
         validationSchema: addUserSchema,
         onSubmit: async ({ username, password, confirmPassword }, { setSubmitting }) => {
             if (password !== confirmPassword) {
@@ -120,7 +148,7 @@ export const UserModal = ({ onClose, user }: UserModalProps): JSX.Element => {
 
     return (
         <>
-            <form className='form' onSubmit={formik.handleSubmit} noValidate>
+            <form className='form' onSubmit={formik.handleSubmit}>
                 <div className='d-flex flex-column scroll-y me-n7 pe-7'>
                     <div className='fv-row mb-8'>
                         <label className='form-label fs-6 fw-bolder text-dark'>Username</label>
@@ -236,8 +264,8 @@ export const UserModal = ({ onClose, user }: UserModalProps): JSX.Element => {
                         <span className='indicator-label'>Submit</span>
                         {formik.isSubmitting && (
                             <span className='indicator-progress'>
-                                Please wait...{' '}
-                                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                                Please wait...
+                                <span className='spinner-border spinner-border-sm align-middle ms-2' />
                             </span>
                         )}
                     </button>
