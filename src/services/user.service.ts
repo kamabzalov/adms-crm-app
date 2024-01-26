@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { getToken } from './utils';
 import { API_URL } from '../app-consts';
 import {
@@ -10,6 +10,7 @@ import {
 } from 'common/interfaces/UserData';
 import { UserQuery } from 'common/interfaces/QueriesParams';
 import { ActionStatus } from 'common/interfaces/ActionStatus';
+
 export { Status } from 'common/interfaces/ActionStatus';
 
 type Method = 'GET' | 'POST';
