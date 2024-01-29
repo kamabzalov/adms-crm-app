@@ -77,7 +77,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
         <CustomModal onClose={onClose} width={800} title={`${apiKey ? 'Edit' : 'Add'} API key`}>
             <Form.Group className='d-flex flex-column row-gap-4'>
                 <Form.Group>
-                    <label className='form-label mb-0'>Created API key</label>
+                    <Form.Label className='form-label mb-0'>Created API key</Form.Label>
                     <Form.Control
                         value={apiKey?.created as string}
                         disabled
@@ -86,7 +86,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Deleted API key</label>
+                    <Form.Label className='form-label mb-0'>Deleted API key</Form.Label>
                     <Form.Control
                         value={apiKey?.deleted as string}
                         disabled
@@ -95,7 +95,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Updated API key</label>
+                    <Form.Label className='form-label mb-0'>Updated API key</Form.Label>
                     <Form.Control
                         value={apiKey?.updated as string}
                         disabled
@@ -103,30 +103,34 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                         name='Updated API key'
                     />
                 </Form.Group>
+                <div className='d-flex w-100 gap-4'>
+                    <Form.Group className='flex-grow-1'>
+                        <Form.Label className='form-label mb-0'>Issue date API key</Form.Label>
+                        <Form.Control
+                            type='date'
+                            className='form-control'
+                            name='Issue API key'
+                            value={formatDateToInputString(new Date(apiKeyIssue))}
+                            onChange={({ target }) =>
+                                setApiKeyIssue(new Date(target.value).getTime())
+                            }
+                        />
+                    </Form.Group>
+                    <Form.Group className='flex-grow-1'>
+                        <Form.Label className='form-label mb-0'>Expiration date API key</Form.Label>
+                        <Form.Control
+                            type='date'
+                            className='form-control'
+                            name='Expiration API key'
+                            value={formatDateToInputString(new Date(apiKeyExpiration))}
+                            onChange={({ target }) =>
+                                setApiKeyExpiration(new Date(target.value).getTime())
+                            }
+                        />
+                    </Form.Group>
+                </div>
                 <Form.Group>
-                    <label className='form-label mb-0'>Issue date API key</label>
-                    <input
-                        type='date'
-                        className='form-control'
-                        name='Issue API key'
-                        value={formatDateToInputString(new Date(apiKeyIssue))}
-                        onChange={({ target }) => setApiKeyIssue(new Date(target.value).getTime())}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <label className='form-label mb-0'>Expiration date API key</label>
-                    <input
-                        type='date'
-                        className='form-control'
-                        name='Expiration API key'
-                        value={formatDateToInputString(new Date(apiKeyExpiration))}
-                        onChange={({ target }) =>
-                            setApiKeyExpiration(new Date(target.value).getTime())
-                        }
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <label className='form-label mb-0'>Last used date API key</label>
+                    <Form.Label className='form-label mb-0'>Last used date API key</Form.Label>
                     <Form.Control
                         value={apiKey?.lastused as string}
                         disabled
@@ -135,7 +139,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Flags API key</label>
+                    <Form.Label className='form-label mb-0'>Flags API key</Form.Label>
                     <Form.Control
                         value={apiKey?.flags as number}
                         disabled
@@ -145,7 +149,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                 </Form.Group>
 
                 <Form.Group>
-                    <label className='form-label mb-0'>API key type</label>
+                    <Form.Label className='form-label mb-0'>API key type</Form.Label>
                     <Form.Select value={apiKeyType} onChange={handleApiKeyTypeChange}>
                         {apiKeyTypes?.map(({ id, name }) => (
                             <option key={String(id)} value={id}>
@@ -155,7 +159,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     </Form.Select>
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>User uID</label>
+                    <Form.Label className='form-label mb-0'>User uID</Form.Label>
                     <Form.Control
                         value={apiKey?.useruid}
                         disabled
@@ -164,7 +168,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Item uID</label>
+                    <Form.Label className='form-label mb-0'>Item uID</Form.Label>
                     <Form.Control
                         value={apiKey?.itemuid}
                         disabled
@@ -173,7 +177,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Api key</label>
+                    <Form.Label className='form-label mb-0'>Api key</Form.Label>
                     <Form.Control
                         as='textarea'
                         value={apiKeyValue}
@@ -182,7 +186,7 @@ export const ApiKeyModal = ({ apiKey, onClose, updateAction }: ApiKeyModalProps)
                     />
                 </Form.Group>
                 <Form.Group>
-                    <label className='form-label mb-0'>Api notes</label>
+                    <Form.Label className='form-label mb-0'>Api notes</Form.Label>
                     <Form.Control
                         as='textarea'
                         value={apiKeyNotes}
