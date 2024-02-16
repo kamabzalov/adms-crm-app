@@ -10,7 +10,6 @@ import {
 } from 'common/interfaces/UserData';
 import { UserQuery } from 'common/interfaces/QueriesParams';
 import { ActionStatus } from 'common/interfaces/ActionStatus';
-
 export { Status } from 'common/interfaces/ActionStatus';
 
 type Method = 'GET' | 'POST';
