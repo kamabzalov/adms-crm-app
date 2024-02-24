@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Column } from 'react-table';
 import { UserCustomHeader } from './UserCustomHeader';
 import { UserLinkCell } from './UserLinkCell';
@@ -13,7 +12,7 @@ export const usersColumns = (): ReadonlyArray<Column<User>> => {
         },
         {
             Header: (props) => (
-                <UserCustomHeader tableProps={props} title='User name' className='min-w-125px' />
+                <UserCustomHeader tableProps={props} title='User name' className='w-300px' />
             ),
             id: 'username',
             Cell: ({ ...props }) => {
