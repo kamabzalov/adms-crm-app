@@ -62,7 +62,7 @@ export const CustomModal = ({
                     <div className='modal-content'>
                         <UserModalHeader onClose={onClose} title={title} />
                         <div
-                            className='modal-body scroll-y ms-5 ms-xl-15 pe-3 pe-xl-10 me-2 overflow-y-auto'
+                            className='modal-body scroll-y ms-5 pe-3 pe-xl-10 me-2 overflow-y-auto'
                             style={{ maxHeight: 'calc(100vh - 180px)' }}
                         >
                             {children}
