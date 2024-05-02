@@ -118,6 +118,25 @@ export const getUserLocations = async (uid: string): Promise<Location[] | undefi
     }
 };
 
+export const addUserLocation = async (
+    uid: string,
+    location: Partial<Location>
+): Promise<Status | undefined> => {
+    try {
+        const response = await fetchApiData<{
+            status: Status;
+        }>('POST', `user/${uid}/locations`, {
+            data: location,
+        });
+        if (response.status === Status.OK) {
+            return response.status;
+        }
+    } catch (error) {
+        //TODO: add error handler
+        return undefined;
+    }
+};
+
 export const getUserProfile = (uid: string): Promise<string> => {
     return fetchApiData<string>('GET', `user/${uid}/profile`);
 };
