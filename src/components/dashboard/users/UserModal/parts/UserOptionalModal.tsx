@@ -74,10 +74,6 @@ export const UserOptionalModal = ({
     const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
     const [locationKeys, setLocationKeys] = useState<string[]>([]);
     const [newLocation, setNewLocation] = useState<Partial<Location> | null>(null);
-<<<<<<< HEAD
-=======
-    const [formErrors, setFormErrors] = useState<boolean>(false);
->>>>>>> 50a48dbf46cb53bad62064b6b216f1a206d1357b
 
     const { handleShowToast } = useToast();
 
@@ -245,10 +241,6 @@ export const UserOptionalModal = ({
                         icon='check'
                         disabled={
                             !Object.values(newLocation).some((value) => value !== '') ||
-<<<<<<< HEAD
-=======
-                            formErrors ||
->>>>>>> 50a48dbf46cb53bad62064b6b216f1a206d1357b
                             !newLocation.locName
                         }
                         buttonClickAction={handleSaveNewUserLocation}
@@ -274,10 +266,6 @@ export const UserOptionalModal = ({
                         validationSchema={UserOptionalSchema}
                     >
                         {({ errors, touched }) => {
-<<<<<<< HEAD
-=======
-                            setFormErrors(!!Object.keys(errors).length);
->>>>>>> 50a48dbf46cb53bad62064b6b216f1a206d1357b
                             return (
                                 <TabPanel activeTab={activeTab} tabName={`${index}`}>
                                     <Form>
