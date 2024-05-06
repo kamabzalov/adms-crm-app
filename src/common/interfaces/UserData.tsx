@@ -27,7 +27,6 @@ export interface User {
     index?: number;
     parentuid?: string;
     parentusername?: string;
-    creatorusername?: string;
     updated?: string;
     username: string;
     useruid: string;
@@ -116,4 +115,10 @@ export interface UserInfo {
     updated: string;
     userName: string;
     useruid: string;
+}
+
+export interface UserLocationError {
+    error: string;
+    info: string;
+    status: Status.ERROR;
 }
