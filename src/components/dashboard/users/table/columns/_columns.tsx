@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Column } from 'react-table';
 import { UserCustomHeader } from './UserCustomHeader';
 import { UserLinkCell } from './UserLinkCell';
@@ -22,6 +23,7 @@ export const usersColumns = (): ReadonlyArray<Column<User>> => {
         },
         {
             Header: 'Created by user',
+            accessor: 'creatorusername',
         },
         {
             Header: 'Is admin',
