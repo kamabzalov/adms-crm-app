@@ -22,7 +22,6 @@ export const usersColumns = (): ReadonlyArray<Column<User>> => {
         },
         {
             Header: 'Created by user',
-            accessor: 'creatorusername',
         },
         {
             Header: 'Is admin',
