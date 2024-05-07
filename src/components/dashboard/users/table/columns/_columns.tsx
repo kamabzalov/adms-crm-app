@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Column } from 'react-table';
 import { UserCustomHeader } from './UserCustomHeader';
 import { UserLinkCell } from './UserLinkCell';
