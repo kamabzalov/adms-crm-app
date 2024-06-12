@@ -25,7 +25,7 @@ export const usersColumns = (): ReadonlyArray<Column<User>> => {
             accessor: 'creatorusername',
         },
         {
-            Header: 'Is admin',
+            Header: 'Client admin',
             id: 'isadmin',
             Cell: ({ ...props }) => (props.data[props.row.index].isadmin ? 'yes' : 'no'),
         },
