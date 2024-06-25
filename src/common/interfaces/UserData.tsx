@@ -32,6 +32,7 @@ export interface User {
     username: string;
     useruid: string;
     isadmin?: number;
+    isclientadmin?: boolean;
 }
 
 export interface ShortUserInfo {
